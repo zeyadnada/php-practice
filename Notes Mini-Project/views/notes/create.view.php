@@ -1,11 +1,11 @@
-<?php require('partials/head.php')  ?>
-<?php require('partials/nav.php')  ?>
-<?php require('partials/banner.php')  ?>
+<?php require base_path('views/partials/head.php') ?>
+<?php require base_path('views/partials/nav.php') ?>
+<?php require base_path('views/partials/banner.php') ?>
 
 <main>
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 text-blue-500 ">
 
-        <form method="POST">
+        <form method="POST" action="/notes">
             <div class="space-y-12">
                 <div class="border-b border-white/10 pb-12">
                     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -17,7 +17,7 @@
                                     placeholder="Here's an idea for a note..."><?= $_POST['body'] ?? '' ?></textarea>
                             </div>
                             <?php if (isset($errors['body'])): ?>
-                            <p class="text-red-500 text-xs mt-2"><?= htmlspecialchars($errors['body']) ?></p>
+                                <p class="text-red-500 text-xs mt-2"><?= htmlspecialchars($errors['body']) ?></p>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -34,4 +34,4 @@
     </div>
 </main>
 
-<?php require('partials/footer.php')  ?>
+<?php require base_path('views/partials/footer.php') ?>

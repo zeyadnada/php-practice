@@ -17,7 +17,7 @@
                                     placeholder="Here's an idea for a note..."><?= $_POST['body'] ?? '' ?></textarea>
                             </div>
                             <?php if (isset($errors['body'])): ?>
-                                <p class="text-red-500 text-xs mt-2"><?= htmlspecialchars($errors['body']) ?></p>
+                            <p class="text-red-500 text-xs mt-2"><?= htmlspecialchars($errors['body']) ?></p>
                             <?php endif; ?>
                         </div>
                     </div>

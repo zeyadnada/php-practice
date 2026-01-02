@@ -9,40 +9,28 @@
 // The BASE_PATH constant points to the project root directory.
 // __DIR__ = /public
 // __DIR__ . '/../' = go one level up → the real project root
-
-use Core\Session;
-
 const BASE_PATH = __DIR__ . '/../';
 
 
 require BASE_PATH . 'Core/functions.php';
 
 // ---------------------------------------------------------------------------------------------------------
-// AUTOLOADER (affter using Composer)
+// AUTOLOADER
 // ---------------------------------------------------------------------------------------------------------
 
-require BASE_PATH . 'vendor/autoload.php';
+// spl_autoload_register() tells PHP:
+// "Whenever you use a class that hasn't been loaded yet,
+// automatically run this function to load the class file."
+spl_autoload_register(function ($class) {
 
+    // Convert namespace separators "\" into directory separators "/"
+    // Example: "Core\Database" → "Core/Database"
+    $class = str_replace('\\', DIRECTORY_SEPARATOR, $class);
 
-
-// ---------------------------------------------------------------------------------------------------------
-// AUTOLOADER (before using Composer)
-// ---------------------------------------------------------------------------------------------------------
-
-/// spl_autoload_register() tells PHP:
-/// "Whenever you use a class that hasn't been loaded yet,
-/// automatically run this function to load the class file."
-//spl_autoload_register(function ($class) {
-
-/// Convert namespace separators "\" into directory separators "/"
-/// Example: "Core\Database" → "Core/Database"
-//$class = str_replace('\\', DIRECTORY_SEPARATOR, $class);
-
-/// Build the full path to the class file and require it
-/// base_path("Core/Database.php")
-//require base_path("{$class}.php");
-//});
-
+    // Build the full path to the class file and require it
+    // base_path("Core/Database.php")
+    require base_path("{$class}.php");
+});
 
 
 session_start();
@@ -70,6 +58,3 @@ $method = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
 
 // Let the router match the URL + method and call the correct controller
 $router->route($url, $method);
-
-// Clear all flash data after the request is handled
-Session::unflash();

@@ -36,7 +36,7 @@ class Router
                 Middleware::resolve($route['middleware']);
 
                 // Load the controller file associated with this route
-                return require base_path('Http/controllers/' . $route['controller']);
+                return require base_path($route['controller']);
             }
         }
 

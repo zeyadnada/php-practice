@@ -41,13 +41,23 @@ function view($path, $attributes = [])
     require base_path("views/{$path}");
 }
 
-function redirect($path)
+function login($user)
 {
-    header("Location: {$path}");
-    exit;
+    //mark that User has logged in (session)
+    $_SESSION['user'] = [
+        'email' => $user['email']
+    ];
 }
 
-function old($key, $default = '')
+function logout()
 {
-    return Core\Session::get('old')[$key] ?? $default;
+    // make global session empty
+    $_SESSION = [];
+
+    //destroying session file on server
+    session_destroy();
+
+    //delete session cookie on browser (by setting its expiration time to past time so browser removes it immediately) 
+    $params = session_get_cookie_params();
+    setcookie(session_name(), '', time() - 3600, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
 }
